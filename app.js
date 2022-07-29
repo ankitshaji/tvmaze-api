@@ -1,3 +1,4 @@
+//global elementObjects
 //elementObject = (JSObject/elementObject/nodeObject).method(css element selector)
 const form = document.querySelector("#searchForm");
 
@@ -11,7 +12,10 @@ const form = document.querySelector("#searchForm");
 //it executes the anonymous callback function expression
 //when it executes the fucntion expression it create and passes in the evenObject as argument
 //this eventObject is caught as a parameter in the function expression
-form.addEventListener("submit", function (e) {
+
+//async anon callback function expression
+//returns promiseObject - value-undefined/unless returned
+form.addEventListener("submit", async function (e) {
   //submitEventObject.method()
   //prevent deafult eventObject sending HttpRequest Formdata to action attribute location
   //prevent deafult eventObject moving onto next page location URL in action attribute
@@ -23,7 +27,19 @@ form.addEventListener("submit", function (e) {
   //property is the value of name attribute of element
   //becomes - inputObject.property - returns string
   const searchTerm = this.elements.query.value;
-  console.log(searchTerm);
+
+  //returns promiseObject - pending to resolved(responseObject) - value is responseObject
+  //put resolve(responseObject) value in variable
+  //returns http stuctured - ResponseObeject - axios json string to object conversion (auto parse)
+  const responseObject = await axios.get(
+    `https://api.tvmaze.com/search/shows?q=${searchTerm}`
+  );
+  //await makes it synchronous code
+  // console.dir(responseObject.data[0]); //array of objects
+  const img = document.createElement("img");
+  img.src = responseObject.data[0].show.image.medium; //string
+  document.body.append(img);
+   
   //clear value property
   this.elements.query.value = "";
 });
