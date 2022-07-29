@@ -29,17 +29,32 @@ form.addEventListener("submit", async function (e) {
   const searchTerm = this.elements.query.value;
 
   //returns promiseObject - pending to resolved(responseObject) - value is responseObject
-  //put resolve(responseObject) value in variable
+  //put resolve(responseObject) ie promisObject value in variable
   //returns http stuctured - ResponseObeject - axios json string to object conversion (auto parse)
   const responseObject = await axios.get(
     `https://api.tvmaze.com/search/shows?q=${searchTerm}`
   );
   //await makes it synchronous code
-  // console.dir(responseObject.data[0]); //array of objects
-  const img = document.createElement("img");
-  img.src = responseObject.data[0].show.image.medium; //string
-  document.body.append(img);
-   
+  //console.dir(responseObject.data[0]); //array of objects
+  //code splitting/refactoring - function executes another function inside it
+  makeImages(responseObject.data); //function execution - argument-array of objects
+
   //clear value property
   this.elements.query.value = "";
 });
+
+//arrow function expression stored in variable - takes 1 parameter
+const makeImages = (arrayShows) => {
+  for (let showObj of arrayShows) {
+    //null is a falsy value - so wont run if null - if(false)
+    if (showObj.show.image) {
+      //creating new img element 
+      //adding to elementObject.src property
+      //then adding it to to parent elementObejct
+      const img = document.createElement("img");
+      img.src = showObj.show.image.medium; //string
+      document.body.append(img); //parentElementObject.append(childElementObject)
+    }
+    //else ignore
+  }
+};
