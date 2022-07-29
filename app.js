@@ -30,11 +30,17 @@ form.addEventListener("submit", async function (e) {
   //becomes - inputObject.property - returns string
   const searchTerm = this.elements.query.value;
 
+  //cleaner way to add multiple queryStrings
+  //can also add headers obejct in config
+  const config = { params: { q: searchTerm } };
+
   //returns promiseObject - pending to resolved(responseObject) - value is responseObject
   //put resolve(responseObject) ie promisObject value in variable
   //returns http stuctured - ResponseObeject - axios json string to object conversion (auto parse)
+  //axios http strucuted request - default(method:GET/{headers:{Accept:text/HTML}}),takes argument - (url,headerObject,paramsObject)
   const responseObject = await axios.get(
-    `https://api.tvmaze.com/search/shows?q=${searchTerm}`
+    `https://api.tvmaze.com/search/shows`,
+    config
   );
   //await makes it synchronous code
   //console.dir(responseObject.data[0]); //array of objects
@@ -50,7 +56,7 @@ const makeImages = (arrayShows) => {
   for (let showObj of arrayShows) {
     //null is a falsy value - so wont run if null - if(false)
     if (showObj.show.image) {
-      //creating new img element 
+      //creating new img element
       //adding to elementObject.src property
       //then adding it to to parent elementObejct
       const img = document.createElement("img");
