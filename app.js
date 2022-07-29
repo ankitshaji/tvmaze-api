@@ -30,8 +30,9 @@ form.addEventListener("submit", async function (e) {
   //becomes - inputObject.property - returns string
   const searchTerm = this.elements.query.value;
 
-  //cleaner way to add multiple queryStrings
+  //cleaner way to add multiple queryString parameters
   //can also add headers obejct in config
+  //config object - property/key params has value object
   const config = { params: { q: searchTerm } };
 
   //returns promiseObject - pending to resolved(responseObject) - value is responseObject
