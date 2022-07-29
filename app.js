@@ -7,7 +7,9 @@ const form = document.querySelector("#searchForm");
 //eventObject - eg.submitEventObject-propeties/methods
 //by default form eventObject sends HTTPRequest with FormData to action attributes location
 //by default form eventObject moves onto next page location URL in action attribute
+
 //method - addEventListner(eventString,anonymousCallbackFunctionExpression(parameter))
+//make addEventListener() after defining  required functions
 //when stringEvent happens on elementObject(Target)
 //it executes the anonymous callback function expression
 //when it executes the fucntion expression it create and passes in the evenObject as argument
